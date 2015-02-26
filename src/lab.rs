@@ -5,13 +5,13 @@ use glutin::Event;
 use glium::*;
 
 pub struct Lab <'a, V, U, T: Stage<V, U>> {
-    pub render: &'a mut Render,
+    pub render: &'a Render,
     pub stage: StageContainer<V, U, T>,
     pub timestamp: f64,
 }
 
 impl <'a, V, U, T: Stage<V, U>> Lab <'a, V, U, T> {
-    pub fn new(render: &'a mut Render, obj: T) -> Self {
+    pub fn new(render: &'a Render, obj: T) -> Self {
         let stage = StageContainer::new(obj);
         Lab {
             render: render,
