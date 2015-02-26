@@ -6,7 +6,7 @@ use glium::*;
 
 pub struct Lab <'a, V, U, T: Stage<V, U>> {
     pub render: &'a Render,
-    pub stage: StageContainer<'a, V, U, T>,
+    pub stage: StageContainer<V, U, T>,
     pub timestamp: f64,
 }
 

@@ -1,5 +1,6 @@
 use glium::*;
 use render::Draw;
+use std::marker;
 
 pub trait Stage<T, U> {
     fn update(&mut self, dt: f32);
@@ -11,14 +12,18 @@ pub trait Stage<T, U> {
     fn get_draw_params(&self) -> DrawParameters;
 }
 
-pub struct StageContainer<'a, V, U, T: Stage<V, U>> {
+pub struct StageContainer<V, U, T: Stage<V, U>> {
     pub obj: T,
+    marker1: marker::PhantomData<U>,
+    marker2: marker::PhantomData<V>,
 }
 
-impl <'a, V, U, T: Stage<V, U>> StageContainer <'a, V, U, T> {
-    pub fn new(obj: T) -> StageContainer<'a, V, U, T> {
+impl <V, U, T: Stage<V, U>> StageContainer <V, U, T> {
+    pub fn new(obj: T) -> StageContainer<V, U, T> {
         StageContainer {
             obj: obj,
+            marker1: marker::PhantomData,
+            marker2: marker::PhantomData,
         }
     }
 
@@ -29,7 +34,7 @@ impl <'a, V, U, T: Stage<V, U>> StageContainer <'a, V, U, T> {
     }
 }
 
-impl <'a, V: vertex::Vertex, U: uniforms::Uniforms + Copy, T: Stage<V, U>> Draw for StageContainer<'a, V, U, T> {
+impl <V: vertex::Vertex, U: uniforms::Uniforms + Copy, T: Stage<V, U>> Draw for StageContainer<V, U, T> {
     #[inline]
     #[allow(unused_variables)]
     fn draw(&self, frame: &mut Frame, dt: f32) {
