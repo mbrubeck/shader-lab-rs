@@ -31,7 +31,7 @@ pub fn init(w: u32, h: u32) -> render::Render {
     Render::new(display)
 }
 
-pub fn run<V: glium::vertex::Vertex, U: glium::uniforms::Uniforms + Copy, T: Stage<V, U>>(obj: T, render: &Render) {
+pub fn run<V: glium::vertex::Vertex, U: glium::uniforms::Uniforms + Copy, T: Stage<V, U>>(obj: T, render: &mut Render) {
     use event_loop::EventLoop;
     use lab::Lab;
 

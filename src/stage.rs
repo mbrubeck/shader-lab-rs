@@ -37,8 +37,8 @@ impl <V, U, T: Stage<V, U>> StageContainer <V, U, T> {
 impl <V: vertex::Vertex, U: uniforms::Uniforms + Copy, T: Stage<V, U>> Draw for StageContainer<V, U, T> {
     #[inline]
     #[allow(unused_variables)]
-    fn draw(&self, frame: &mut Frame, dt: f32) {
-        let mut obj = &self.obj;
+    fn draw(&mut self, frame: &mut Frame, dt: f32) {
+        let obj = &mut self.obj;
         obj.render(dt);
         frame.draw(
             &obj.get_vertex_buffer(),

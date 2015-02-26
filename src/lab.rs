@@ -5,16 +5,16 @@ use glutin::Event;
 use glium::*;
 
 pub struct Lab <'a, V, U, T: Stage<V, U>> {
-    pub render: &'a Render,
+    pub render: &'a mut Render,
     pub stage: StageContainer<V, U, T>,
     pub timestamp: f64,
 }
 
 impl <'a, V, U, T: Stage<V, U>> Lab <'a, V, U, T> {
-    pub fn new(render: &'a Render, obj: T) -> Self {
+    pub fn new(render: &'a mut Render, obj: T) -> Self {
         let stage = StageContainer::new(obj);
         Lab {
-            render: &render,
+            render: render,
             stage: stage,
             timestamp: 0 as f64,
         }
@@ -24,7 +24,7 @@ impl <'a, V, U, T: Stage<V, U>> Lab <'a, V, U, T> {
 impl <'a, V: vertex::Vertex, U: uniforms::Uniforms + Copy, T: Stage<V, U>> HasEventLoop for Lab<'a, V, U, T> {
     fn render(&mut self, dt: f32) {
         let mut frame = self.render.begin();
-        self.render.draw(&mut frame, &self.stage, dt);
+        self.render.draw(&mut frame, &mut self.stage, dt);
         frame.finish();
     }
 
